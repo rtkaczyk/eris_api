@@ -8,7 +8,7 @@ object General {
     name := "api",
     organization := "rtkaczyk.eris",
     crossPaths := false,
-    version := "0.1",
+    version := "1.0.0",
     versionCode := 0,
     scalaVersion := "2.9.2",
     platformName in Android := "android-8"
@@ -21,13 +21,8 @@ object General {
   lazy val fullAndroidSettings =
     General.settings ++
     AndroidProject.androidSettings ++
-    //TypedResources.settings ++
     proguardSettings ++
-    AndroidManifestGenerator.settings /*++
-    AndroidMarketPublish.settings ++ Seq (
-      keyalias in Android := "change-me"
-    ) ++
-    addArtifact(Artifact("api", "apklib", "apklib"), apklibPackage in Android).settings*/
+    AndroidManifestGenerator.settings
 }
 
 object AndroidBuild extends Build {
