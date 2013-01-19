@@ -70,6 +70,9 @@ object Events {
             intent getIntExtra ("received", 0),
             intent getIntExtra ("all", 0)
         )
+        
+      case _ =>
+        UnknownEvent
     }
   }
   
@@ -81,6 +84,10 @@ object Events {
     def description: Option[String] = None
   }
   
+  
+  case object UnknownEvent extends ErisEvent {
+    val event = "# Uknown event #"
+  }
   
   case object ErisStarted extends ErisEvent {
     val event = EV_ERIS_STARTED
@@ -131,7 +138,7 @@ object Events {
   }
   
   case class ConnectionFailed(device: DeviceId, cause: String) extends ErisEvent {
-    val event = EV_CONNECTION_FINISHED
+    val event = EV_CONNECTION_FAILED
     override def toIntent = ( 
       new Intent(event) 
       putExtra ("device", device.id)
@@ -162,13 +169,15 @@ object Events {
   
   
   object EventReceiver {
-    def apply(react: ErisEvent => Unit) = new EventReceiver(react)
+    def apply(react: PartialFunction[ErisEvent, Unit]) = new EventReceiver(react)
   }
   
-  class EventReceiver(val react: ErisEvent => Unit) {
+  class EventReceiver(val react: PartialFunction[ErisEvent, Unit]) {
     private val receiver = new BroadcastReceiver {
       override def onReceive(context: Context, intent: Intent) {
-        react(ErisEvent(intent))
+        val ev = ErisEvent(intent)
+        if (react isDefinedAt ev)
+          react(ev)
       }
     }
     

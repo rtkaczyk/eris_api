@@ -4,8 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public final class Packet implements Parcelable {
-    public final String name;
-    public final String address;
+    public final String device;
     public final Long time;
     public final byte[] data;
 
@@ -21,24 +20,21 @@ public final class Packet implements Parcelable {
                 }
             };
 
-    public Packet(String name, String address, Long time, byte[] data) {
-        this.name = name;
-        this.address = address;
+    public Packet(String device, Long time, byte[] data) {
+        this.device = device;
         this.time = time;
         this.data = data;
     }
 
     public Packet(Parcel in) {
-        name = in.readString();
-        address = in.readString();
+        device = in.readString();
         time = in.readLong();
         data = in.createByteArray();
     }
 
     @Override
     public void writeToParcel(Parcel out, int arg1) {
-        out.writeString(name);
-        out.writeString(address);
+        out.writeString(device);
         out.writeLong(time);
         out.writeByteArray(data);
     }

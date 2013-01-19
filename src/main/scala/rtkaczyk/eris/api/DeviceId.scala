@@ -6,7 +6,7 @@ object DeviceId {
   val Separator = '/'
   
   def apply(device: BluetoothDevice) = new DeviceId(device.getName, device.getAddress.toUpperCase)
-  def apply(packet: Packet) = new DeviceId(packet.name, packet.address.toUpperCase)
+  def apply(packet: Packet): DeviceId = apply(packet.device)
   def apply(name: String, address: String) = new DeviceId(name, address.toUpperCase)
   def apply(id: String) = {
     val i = id lastIndexOf '/'
