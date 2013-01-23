@@ -8,7 +8,7 @@ object General {
     name := "api",
     organization := "rtkaczyk.eris",
     crossPaths := false,
-    version := "1.0.1",
+    version := "1.1.0",
     versionCode := 0,
     scalaVersion := "2.9.2",
     platformName in Android := "android-8"
